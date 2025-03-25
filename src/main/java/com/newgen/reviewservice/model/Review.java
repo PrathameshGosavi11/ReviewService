@@ -1,11 +1,15 @@
 package com.newgen.reviewservice.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Entity // tell here this is hibernate manage entity and this class now map to the Db
 @Table(name="reviews")
+@Data
+@AllArgsConstructor
 public class Review {
 
     @Id
