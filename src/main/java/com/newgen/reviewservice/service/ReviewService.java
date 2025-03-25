@@ -33,8 +33,8 @@ public class ReviewService implements  IReviewService {
     }
 
     @Override
-    public void deleteReview(Long reviewId) {
+    public void deleteReview(Long productId ,Long reviewId) {
 
-        reviewRepository.deleteById(reviewId);
+        reviewRepository.deleteReviewByProductIdAndReviewId(productId ,reviewId);
     }
 }

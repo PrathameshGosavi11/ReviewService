@@ -5,9 +5,7 @@ import com.newgen.reviewservice.service.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,12 +21,27 @@ public class ReviewController {
         this.iReviewService = iReviewService;
     }
 
-    @GetMapping("/{productId}/revies")
+    @GetMapping("/{productId}/reviews")
     public ResponseEntity<List<Review>> getAllReviewsByProductId(Long productId)
     {
         return ResponseEntity.status(HttpStatus.OK).body (iReviewService.getReviewsByProductId(productId));
     }
 
-    
+    @PostMapping("/{productId}/review")
+    public ResponseEntity<Void> addReview(@PathVariable Long productId,@RequestBody Review review)
+    {
+        review.setProductId(productId);
+        iReviewService.addReview(review);
+       return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{productId}/reviews/{reviewId}")
+    public ResponseEntity<Void> deleteReviewById(@PathVariable Long productId, @PathVariable Long reviewId)
+    {
+          iReviewService.deleteReview(productId,reviewId);
+          return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 
 }

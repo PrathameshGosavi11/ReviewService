@@ -11,5 +11,5 @@ public interface IReviewService
 
     void addReview(Review review);
 
-    void deleteReview(Long reviewId);
+    void deleteReview(Long productId ,Long reviewId);
 }
