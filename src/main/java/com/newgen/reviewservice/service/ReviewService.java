@@ -5,6 +5,7 @@ import com.newgen.reviewservice.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,8 +29,12 @@ public class ReviewService implements  IReviewService {
     @Override
     public void addReview(Review review) {
 
-        reviewRepository.save(review);
+        review.setCreatedBy("System");
+        review.setUpdatedBy("System");
+        review.setCreatedAt(LocalDateTime.now());
+        review.setUpdatedAt(LocalDateTime.now());
 
+        reviewRepository.save(review);
     }
 
     @Override
