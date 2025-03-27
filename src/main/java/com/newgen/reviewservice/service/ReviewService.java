@@ -1,5 +1,6 @@
 package com.newgen.reviewservice.service;
 
+import com.newgen.reviewservice.dto.ReviewDTO;
 import com.newgen.reviewservice.model.Review;
 import com.newgen.reviewservice.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
@@ -23,10 +24,30 @@ public class ReviewService implements  IReviewService {
     }
 
     @Override
-    public List<Review> getReviewsByProductId(Long ProductId) {
+    public List<ReviewDTO> getReviewsByProductId(Long ProductId) {
 
         log.info("request come on service ");
-        return reviewRepository.findAllByProductId(ProductId);
+        //ip- List<Review>
+        //op -List<reviewDTO>
+
+        final List<ReviewDTO> reviews= reviewRepository.findAllByProductId(ProductId);
+
+       List<ReviewDTO> reviewDTOS= reviews.stream().map(review -> MapToReviewDTO(review))
+                .toList();
+        return  reviewDTOS;
+    }
+
+    private ReviewDTO MapToReviewDTO(ReviewDTO review) {
+
+        ReviewDTO reviewDTO=new ReviewDTO();
+        reviewDTO.setReviewId(review.getReviewId());
+        reviewDTO.setUserId(reviewDTO.getUserId());
+        reviewDTO.setProductId(reviewDTO.getProductId());
+        reviewDTO.setRatings(reviewDTO.getRatings());
+        reviewDTO.setTitle(reviewDTO.getTitle());
+        reviewDTO.setDescription(reviewDTO.getDescription());
+        reviewDTO.setCreatedAt(review.getCreatedAt());
+        return reviewDTO;
     }
 
     @Override
