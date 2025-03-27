@@ -2,6 +2,7 @@ package com.newgen.reviewservice.service;
 
 import com.newgen.reviewservice.model.Review;
 import com.newgen.reviewservice.repository.ReviewRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,10 @@ public class ReviewService implements  IReviewService {
     }
 
     @Override
+    @Transactional
     public void deleteReview(Long productId ,Long reviewId) {
 
+        log.info("Request come on service");
         reviewRepository.deleteReviewByProductIdAndReviewId(productId ,reviewId);
     }
 }

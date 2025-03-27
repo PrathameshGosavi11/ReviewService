@@ -42,6 +42,7 @@ public class ReviewController {
     @DeleteMapping("/{productId}/reviews/{reviewId}")
     public ResponseEntity<Void> deleteReviewById(@PathVariable Long productId, @PathVariable Long reviewId)
     {
+        log.info("Request come on the controller");
           iReviewService.deleteReview(productId,reviewId);
           return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity // tell here this is hibernate manage entity and this class now map to the Db
-@Table(name="reviews")
+@Table(name="review_Table")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
