@@ -23,7 +23,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{productId}/reviews")
-    public ResponseEntity<List<Review>> getAllReviewsByProductId(Long productId)
+    public ResponseEntity<List<Review>> getAllReviewsByProductId( @PathVariable Long productId)
     {
         log.info("request come on the controller");
 
