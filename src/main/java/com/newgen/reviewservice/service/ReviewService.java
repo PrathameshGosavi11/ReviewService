@@ -2,12 +2,13 @@ package com.newgen.reviewservice.service;
 
 import com.newgen.reviewservice.model.Review;
 import com.newgen.reviewservice.repository.ReviewRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Slf4j
 @Service
 public class ReviewService implements  IReviewService {
 
@@ -23,6 +24,7 @@ public class ReviewService implements  IReviewService {
     @Override
     public List<Review> getReviewsByProductId(Long ProductId) {
 
+        log.info("request come on service ");
         return reviewRepository.findAllByProductId(ProductId);
     }
 

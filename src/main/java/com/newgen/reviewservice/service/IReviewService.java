@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IReviewService
 {
-    public List<Review> getReviewsByProductId(Long ProductId);
+    public List<Review> getReviewsByProductId(Long productId);
 
     void addReview(Review review);
 
