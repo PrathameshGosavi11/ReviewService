@@ -10,7 +10,7 @@ public interface IReviewService
 {
     public List<ReviewDTO> getReviewsByProductId(Long productId);
 
-    void addReview(Review review);
+    void addReview(ReviewDTO reviewDTO);
 
     void deleteReview(Long productId ,Long reviewId);
 }

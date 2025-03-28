@@ -55,14 +55,26 @@ public class ReviewService implements  IReviewService {
     }
 
     @Override
-    public void addReview(Review review) {
-
+    public void addReview(ReviewDTO reviewDTO) {
+        Review  review= maptoReview(reviewDTO);
         review.setCreatedBy("System");
         review.setUpdatedBy("System");
         review.setCreatedAt(LocalDateTime.now());
         review.setUpdatedAt(LocalDateTime.now());
 
         reviewRepository.save(review);
+    }
+
+    private Review maptoReview(ReviewDTO reviewDTO) {
+
+        Review review=new Review();
+        review.setProductId(reviewDTO.getProductId());
+        review.setUserId(reviewDTO.getUserId());
+        review.setRatings(reviewDTO.getRatings());
+        review.setTitle(reviewDTO.getTitle());
+        review.setDescription(reviewDTO.getDescription());
+       return review ;
+
     }
 
     @Override

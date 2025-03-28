@@ -32,11 +32,11 @@ public class ReviewController {
     }
 
     @PostMapping("/{productId}/review")
-    public ResponseEntity<Void> addReview(@PathVariable Long productId,@RequestBody Review review)
+    public ResponseEntity<Void> addReview(@PathVariable Long productId,@RequestBody ReviewDTO reviewDTO)
     {
         log.info("Request come on the controoller add request ");
-        review.setProductId(productId);
-        iReviewService.addReview(review);
+        reviewDTO.setProductId(productId);
+        iReviewService.addReview(reviewDTO);
        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
