@@ -30,23 +30,27 @@ public class ReviewService implements  IReviewService {
         //ip- List<Review>
         //op -List<reviewDTO>
 
-        final List<ReviewDTO> reviews= reviewRepository.findAllByProductId(ProductId);
+        final List<Review> reviews= reviewRepository.findAllByProductId(ProductId);
 
-       List<ReviewDTO> reviewDTOS= reviews.stream().map(review -> MapToReviewDTO(review))
-                .toList();
-        return  reviewDTOS;
+     return  reviews.stream()
+             .map(this:: MapToReviewDTO)
+             .toList();
+
+
     }
 
-    private ReviewDTO MapToReviewDTO(ReviewDTO review) {
+    private ReviewDTO MapToReviewDTO(Review review) {
 
+        log.info("setting start");
         ReviewDTO reviewDTO=new ReviewDTO();
         reviewDTO.setReviewId(review.getReviewId());
-        reviewDTO.setUserId(reviewDTO.getUserId());
-        reviewDTO.setProductId(reviewDTO.getProductId());
-        reviewDTO.setRatings(reviewDTO.getRatings());
-        reviewDTO.setTitle(reviewDTO.getTitle());
-        reviewDTO.setDescription(reviewDTO.getDescription());
+        reviewDTO.setUserId(review.getUserId());
+        reviewDTO.setProductId(review.getProductId());
+        reviewDTO.setRatings(review.getRatings());
+        reviewDTO.setTitle(review.getTitle());
+        reviewDTO.setDescription(review.getDescription());
         reviewDTO.setCreatedAt(review.getCreatedAt());
+        log.info("setting end ");
         return reviewDTO;
     }
 
