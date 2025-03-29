@@ -1,6 +1,7 @@
 package com.newgen.reviewservice.service;
 
 import com.newgen.reviewservice.dto.ReviewDTO;
+import com.newgen.reviewservice.mapper.ReviewMapper;
 import com.newgen.reviewservice.model.Review;
 import com.newgen.reviewservice.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
@@ -15,12 +16,13 @@ import java.util.List;
 public class ReviewService implements  IReviewService {
 
     private  final ReviewRepository reviewRepository;
-
+    private final ReviewMapper reviewMapper;
     //depency injection with construtor
     @Autowired
-    public  ReviewService(ReviewRepository reviewRepository)
+    public  ReviewService(ReviewRepository reviewRepository,ReviewMapper reviewMapper)
     {
         this.reviewRepository=reviewRepository;
+        this.reviewMapper=reviewMapper;
     }
 
     @Override
@@ -33,30 +35,30 @@ public class ReviewService implements  IReviewService {
         final List<Review> reviews= reviewRepository.findAllByProductId(ProductId);
 
      return  reviews.stream()
-             .map(this:: MapToReviewDTO)
+             .map(reviewMapper:: toDTO)
              .toList();
 
 
     }
 
-    private ReviewDTO MapToReviewDTO(Review review) {
-
-        log.info("setting start");
-        ReviewDTO reviewDTO=new ReviewDTO();
-        reviewDTO.setReviewId(review.getReviewId());
-        reviewDTO.setUserId(review.getUserId());
-        reviewDTO.setProductId(review.getProductId());
-        reviewDTO.setRatings(review.getRatings());
-        reviewDTO.setTitle(review.getTitle());
-        reviewDTO.setDescription(review.getDescription());
-        reviewDTO.setCreatedAt(review.getCreatedAt());
-        log.info("setting end ");
-        return reviewDTO;
-    }
+//    private ReviewDTO MapToReviewDTO(Review review) {
+//
+//        log.info("setting start");
+//        ReviewDTO reviewDTO=new ReviewDTO();
+//        reviewDTO.setReviewId(review.getReviewId());
+//        reviewDTO.setUserId(review.getUserId());
+//        reviewDTO.setProductId(review.getProductId());
+//        reviewDTO.setRatings(review.getRatings());
+//        reviewDTO.setTitle(review.getTitle());
+//        reviewDTO.setDescription(review.getDescription());
+//        reviewDTO.setCreatedAt(review.getCreatedAt());
+//        log.info("setting end ");
+//        return reviewDTO;
+//    }
 
     @Override
     public void addReview(ReviewDTO reviewDTO) {
-        Review  review= maptoReview(reviewDTO);
+        Review  review= reviewMapper.toReview(reviewDTO);
         review.setCreatedBy("System");
         review.setUpdatedBy("System");
         review.setCreatedAt(LocalDateTime.now());
@@ -65,17 +67,17 @@ public class ReviewService implements  IReviewService {
         reviewRepository.save(review);
     }
 
-    private Review maptoReview(ReviewDTO reviewDTO) {
-
-        Review review=new Review();
-        review.setProductId(reviewDTO.getProductId());
-        review.setUserId(reviewDTO.getUserId());
-        review.setRatings(reviewDTO.getRatings());
-        review.setTitle(reviewDTO.getTitle());
-        review.setDescription(reviewDTO.getDescription());
-       return review ;
-
-    }
+//    private Review maptoReview(ReviewDTO reviewDTO) {
+//
+//        Review review=new Review();
+//        review.setProductId(reviewDTO.getProductId());
+//        review.setUserId(reviewDTO.getUserId());
+//        review.setRatings(reviewDTO.getRatings());
+//        review.setTitle(reviewDTO.getTitle());
+//        review.setDescription(reviewDTO.getDescription());
+//       return review ;
+//
+//    }
 
     @Override
     @Transactional
