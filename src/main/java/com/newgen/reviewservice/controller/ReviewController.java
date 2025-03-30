@@ -2,6 +2,7 @@ package com.newgen.reviewservice.controller;
 
 import com.newgen.reviewservice.dto.ReviewDTO;
 import com.newgen.reviewservice.model.Review;
+import com.newgen.reviewservice.model.ReviewDetails;
 import com.newgen.reviewservice.service.IReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{productId}/reviews")
-    public ResponseEntity<List<ReviewDTO>> getAllReviewsByProductId(@PathVariable Long productId)
+    public ResponseEntity<ReviewDetails> getAllReviewsByProductId(@PathVariable Long productId)
     {
         log.info("request come on the controller");
 

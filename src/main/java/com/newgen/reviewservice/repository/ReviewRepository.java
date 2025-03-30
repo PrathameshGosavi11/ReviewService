@@ -2,6 +2,7 @@ package com.newgen.reviewservice.repository;
 
 import com.newgen.reviewservice.dto.ReviewDTO;
 import com.newgen.reviewservice.model.Review;
+import com.newgen.reviewservice.model.ReviewDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

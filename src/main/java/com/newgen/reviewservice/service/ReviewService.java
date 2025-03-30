@@ -3,6 +3,7 @@ package com.newgen.reviewservice.service;
 import com.newgen.reviewservice.dto.ReviewDTO;
 import com.newgen.reviewservice.mapper.ReviewMapper;
 import com.newgen.reviewservice.model.Review;
+import com.newgen.reviewservice.model.ReviewDetails;
 import com.newgen.reviewservice.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -26,17 +27,18 @@ public class ReviewService implements  IReviewService {
     }
 
     @Override
-    public List<ReviewDTO> getReviewsByProductId(Long ProductId) {
+    public ReviewDetails getReviewsByProductId(Long ProductId) {
 
         log.info("request come on service ");
-        //ip- List<Review>
-        //op -List<reviewDTO>
+         List<ReviewDTO> reviews= reviewRepository.findAllByProductId(ProductId)
+                 .stream()
+                .map(reviewMapper:: toDTO)
+                .toList();
 
-        final List<Review> reviews= reviewRepository.findAllByProductId(ProductId);
+         ReviewDetails reviewDetails=new ReviewDetails();
+         reviewDetails.setReviews(reviews);
+         return reviewDetails;
 
-     return  reviews.stream()
-             .map(reviewMapper:: toDTO)
-             .toList();
 
 
     }
