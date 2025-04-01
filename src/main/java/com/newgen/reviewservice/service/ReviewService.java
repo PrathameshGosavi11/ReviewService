@@ -48,6 +48,7 @@ public class ReviewService implements  IReviewService {
 //
             final Map<Integer,Long> ratingMap=
             reviews.stream().collect(Collectors.groupingBy(ReviewDTO::getRatings, Collectors.counting()));
+
         int oneStarRatings=ratingMap.getOrDefault((int)1 ,0L).intValue();
         int twoStarRatings=ratingMap.getOrDefault((int)2 ,0L).intValue();
         int threeStarRatings=ratingMap.getOrDefault((int)3 ,0L).intValue();
