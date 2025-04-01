@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 public class ReviewService implements  IReviewService {
@@ -36,12 +39,59 @@ public class ReviewService implements  IReviewService {
                 .toList();
 
          ReviewDetails reviewDetails=new ReviewDetails();
+         calculateRatingDetails(reviews,reviewDetails);
          reviewDetails.setReviews(reviews);
          return reviewDetails;
-
-
-
     }
+    private void calculateRatingDetails(List<ReviewDTO> reviews, ReviewDetails reviewDetails) {
+
+//
+            final Map<Integer,Long> ratingMap=
+            reviews.stream().collect(Collectors.groupingBy(ReviewDTO::getRatings, Collectors.counting()));
+        int oneStarRatings=ratingMap.getOrDefault((int)1 ,0L).intValue();
+        int twoStarRatings=ratingMap.getOrDefault((int)2 ,0L).intValue();
+        int threeStarRatings=ratingMap.getOrDefault((int)3 ,0L).intValue();
+        int fourStarRatings=ratingMap.getOrDefault((int)4 ,0L).intValue();
+        int fiveStarRatings=ratingMap.getOrDefault((int)5 ,0L).intValue();
+
+        int totalRatings=(1 * oneStarRatings+ 2 * twoStarRatings+ 3 * threeStarRatings + 4* fourStarRatings+ 5* fiveStarRatings);
+
+        double avgRating=(double) totalRatings/reviews.size();
+
+
+//        int oneStarRatings = 0;
+//        int twoStarRatings = 0;
+//        int threeStarRatings = 0;
+//        int fourStarRatings = 0;
+//        int fiveStarRatings = 0;
+//        int totalRatings = 0;
+//
+//        for (ReviewDTO reviewDTO : reviews) {
+//            int ratings = reviewDTO.getRatings();
+//            totalRatings++;
+//
+//            switch (ratings) {
+//                case 1 -> oneStarRatings++;
+//                case 2 -> twoStarRatings++;
+//                case 3 -> threeStarRatings++;
+//                case 4 -> fourStarRatings++;
+//                case 5 -> fiveStarRatings++;
+//            }
+//
+//        }
+
+        reviewDetails.setTotalOneStarRatings(oneStarRatings);
+        reviewDetails.setTotalTwoStarRatings(twoStarRatings);
+        reviewDetails.setTotalThreeStarRatings(threeStarRatings);
+        reviewDetails.setTotalFourStarRatings(fourStarRatings);
+        reviewDetails.setTotalFiveStarRatings(fiveStarRatings);
+        reviewDetails.setTotalRatings(totalRatings);
+
+        double averageRating=(double) totalRatings/reviews.size(); //review 1-2-3-4-5
+
+        reviewDetails.setAvgRatings(averageRating);
+    }
+
 
 //    private ReviewDTO MapToReviewDTO(Review review) {
 //
